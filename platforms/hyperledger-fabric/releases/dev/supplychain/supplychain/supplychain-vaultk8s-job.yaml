@@ -25,7 +25,7 @@ spec:
       vault:
         type: hashicorp
         role: vault-role
-        address: http://localhost:8200
+        address: http://0.0.0.0:8200
         authPath: localsupplychain
         network: fabric
         secretEngine: secretsv2
