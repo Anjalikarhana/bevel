@@ -25,7 +25,7 @@ spec:
        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
     vault:
       role: vault-role
-      address: http://localhost:8200
+      address: http://0.0.0.0:8200
       authpath: localsupplychain
       secretcryptoprefix: secretsv2/data/supplychain/ordererOrganizations/supplychain-net/ca
       secretcredentialsprefix: secretsv2/data/supplychain/credentials/supplychain-net/ca/supplychain
