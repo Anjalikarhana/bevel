@@ -18,7 +18,7 @@
       --arg c_key "$(cat ./client.key)" \
       --arg c_crt "$(cat ./client.crt)" \
       --arg ca_crt "$(cat ./ca.crt)" \
-      '{"address": $cc_addr, "dial_timeout":"10s", "tls_required":false, "client_auth_required":false, "client_key":"", "client_cert":"", "root_cert":""}' > connection.json
+      '{"address": $cc_addr, "dial_timeout":"10s", "tls_required":true, "client_auth_required":true, "client_key":$c_key, "client_cert":$c_crt, "root_cert":$ca_crt}' > connection.json
     echo '{"path":"","type":"external","label":"'{{ package_name }}'"}' > metadata.json;
   when: chaincode.tls
 
