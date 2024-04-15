@@ -286,7 +286,7 @@ spec:
               jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
             if ! [ -n "${INSTALLED}" ]
             then
-              echo "Error while installing chaincode, exiting.."
+              echo "Error while installing chaincode, exiting.. ${INSTALLED}"
               exit 1
             fi
           fi
