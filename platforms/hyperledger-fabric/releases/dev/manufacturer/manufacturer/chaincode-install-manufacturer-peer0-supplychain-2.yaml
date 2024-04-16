@@ -1,0 +1,59 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: chaincode-install-manufacturer-peer0-supplychain-2
+  namespace: manufacturer-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: chaincode-install-manufacturer-peer0-supplychain-2
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-chaincode-install
+  values:
+    metadata:
+      namespace: manufacturer-net
+      network:
+        version: 2.2.2
+      images:
+        fabrictools: ghcr.io/hyperledger/bevel-fabric-tools:2.2.2
+        alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+
+    peer:
+      name: peer0
+      address: peer0.manufacturer-net:7051
+      localmspid: manufacturerMSP
+      loglevel: debug
+      tlsstatus: true
+    vault:
+      role: vault-role
+      address: http://host.docker.internal:8200
+      authpath: localmanufacturer
+      adminsecretprefix: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/users/admin 
+      orderersecretprefix: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/orderer
+      secretgitprivatekey: secretsv2/data/manufacturer/credentials/manufacturer-net/git
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+      tls: false
+    orderer:
+      address: orderer1.supplychain-net:7050
+    chaincode:
+      builder: hyperledger/fabric-ccenv:2.2.2
+      name: supplychain
+      version: 2
+      lang: golang
+      maindirectory: cmd
+      repository:
+        hostname: "github.com"
+        git_username: "Anjalikarhana"
+        url: github.com/Anjalikarhana/bevel-samples.git
+        branch: main
+        path: examples/supplychain-app/fabric/chaincode_rest_server/chaincode/
+      endorsementpolicies:  ''
