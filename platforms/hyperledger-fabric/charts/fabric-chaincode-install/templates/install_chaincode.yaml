@@ -160,9 +160,13 @@ spec:
 
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
-          git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
-          cd /tmp &&   git config --global http.postBuffer 157286400 &&   git config --global core.compression 0 &&   git config --global core.autocrlf false &&  git config --global http.version HTTP/1.1 &&  git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode > /tmp/git.log 2>&1
-
+          git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)         
+          cd /tmp &&
+          git config --global http.postBuffer 157286400 &&
+          git config --global core.compression 0 &&
+          git config --global core.autocrlf false &&
+          git config --global http.version HTTP/1.1 &&
+          git config --global http.lowSpeedLimit 0 && git config --global http.lowSpeedTime 999999 && git clone --progress https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode > /tmp/git.log 2>&1
           ## Check if the repository was cloned correctly
           if [ $? -ne 0 ]; then
              cat /tmp/git.log
