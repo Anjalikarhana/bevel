@@ -17,7 +17,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
     {{- include "labels.custom" . | nindent 2 }}
 spec:
-  backoffLimit: 6
+  backoffLimit: 10
   template:
     metadata:
       labels:
@@ -241,58 +241,60 @@ spec:
           if [ $version1_4 = 1 ];then
 
             ## Checking installed chaincode
+            log "Checking if chaincode ${CHAINCODE_NAME} version ${CHAINCODE_VERSION} is installed..."
             INSTALLED=$(peer chaincode list --installed | grep "Name: ${CHAINCODE_NAME}, Version: ${CHAINCODE_VERSION},")
             if [ -n "${INSTALLED}" ]
             then
-              echo "chaincode ${CHAINCODE_NAME} version ${CHAINCODE_VERSION} is installed, skipping... "
+              log "Chaincode ${CHAINCODE_NAME} version ${CHAINCODE_VERSION} is already installed, skipping..."
               exit 0
             fi
 
-            echo "Installing Chaincode for ${NETWORK_VERSION}"
+            log "Installing Chaincode for ${NETWORK_VERSION}"
             ## Installing chaincode on a peer
             peer chaincode install -n ${CHAINCODE_NAME} -v ${CHAINCODE_VERSION} -p ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE}
-            echo "Chaincode installed for Fabric v.1.4.X"         
+            log "Chaincode installed for Fabric v.1.4.X"         
           else
             ## Checking installed chaincode
+            log "Checking if chaincode ${CHAINCODE_NAME}_${CHAINCODE_VERSION} is installed..."
             INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
               jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
             if [ -n "${INSTALLED}" ]
             then
-              echo "chaincode ${CHAINCODE_NAME}_${CHAINCODE_VERSION} is installed, skipping... "
+              log "Chaincode ${CHAINCODE_NAME}_${CHAINCODE_VERSION} is already installed, skipping..."
               exit 0
             fi
 
-            echo "Installing Chaincode for ${NETWORK_VERSION}"
+            log "Installing Chaincode for ${NETWORK_VERSION}"
             if [ $PEER_NAME = "peer0" ];then
               ## packaging chaincode
-              echo "Packaging chaincode for the first peer"
+              log "Packaging chaincode for the first peer"
               peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CHAINCODE_NAME}_${CHAINCODE_VERSION}
             else
               export CORE_PEER_ADDRESS=${PEER0_ADDRESS}
-              echo "Extracting package id"
+              log "Extracting package id"
               peer lifecycle chaincode queryinstalled > log.txt
               PACKAGE_ID=$(cat log.txt | grep "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" | sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}")
-              echo "Package Id Extracted ${PACKAGE_ID}"
+              log "Package Id Extracted ${PACKAGE_ID}"
               peer lifecycle chaincode getinstalledpackage --package-id ${PACKAGE_ID}
               export CORE_PEER_ADDRESS=${PEER_ADDRESS}
               export CHAINCODE_NAME=${PACKAGE_ID}
-              echo "installing ${CHAINCODE_NAME} on ${CORE_PEER_ADDRESS}"
+              log "installing ${CHAINCODE_NAME} on ${CORE_PEER_ADDRESS}"
             fi
             ## Installing Chaincode
             peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
-            echo "Chaincode installed for Fabric v.2.X"
+            log "Chaincode installed for Fabric v.2.X"
             ## Check if chaincode got installed 
             INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
               jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
             if ! [ -n "${INSTALLED}" ]
             then
-              echo "Error while installing chaincode, exiting.."
+              log "Error while installing chaincode, exiting.."
               exit 1
             fi
           fi
 
           #query installed
-          echo "peer query installed"
+          log "Querying installed chaincodes..."
           peer lifecycle chaincode queryinstalled
         env:
         - name: PEER_NAME
