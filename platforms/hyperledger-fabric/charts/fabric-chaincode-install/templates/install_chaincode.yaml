@@ -185,7 +185,7 @@ spec:
               export PATH=$PATH:$GOPATH/bin
               go env -w GO111MODULE=auto
             fi
-            cd $GOPATH/src/github.com/chaincode && dep ensure
+            cd $GOPATH/src/github.com/chaincode && dep ensure -update
 
             #chaincode path
             CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
