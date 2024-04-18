@@ -140,7 +140,9 @@ spec:
         args:
         - |-
           #!/bin/bash sh
-
+          log() {
+            echo "$(date +'%Y-%m-%d %H:%M:%S') $1"
+          }
           . /scripts/package-manager.sh
 
           ## Git repository clone for chaincode
