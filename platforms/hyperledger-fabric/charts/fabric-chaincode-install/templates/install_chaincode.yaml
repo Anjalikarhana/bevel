@@ -175,7 +175,7 @@ spec:
           if [ ${CC_RUNTIME_LANGUAGE} = "golang" ]
           then
             ## Copying desired chaincode to a location relative to $GOPATH/src
-            mkdir -p $GOPATH/src/github.com/chaincode && go mod tidy
+            mkdir -p $GOPATH/src/github.com/chaincode 
             cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
             # Get dependencies
