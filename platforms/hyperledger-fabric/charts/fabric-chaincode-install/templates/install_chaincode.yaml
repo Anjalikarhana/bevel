@@ -177,16 +177,6 @@ spec:
             cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
             mkdir -p $GOPATH/bin 
-
-            # Set Go version (example: Go 1.17)
-            export GOLANG_VERSION="2.22"  # Update this with the desired Go version
-
-            # Install the specified Go version
-            curl -O "https://dl.google.com/go/go$GOLANG_VERSION.linux-amd64.tar.gz"  # Adjust the URL for the desired platform
-            sudo tar -C /usr/local -xzf "go$GOLANG_VERSION.linux-amd64.tar.gz"
-
-            # Add Go binary directory to PATH
-            export PATH=$PATH:/usr/local/go/bin
             # Get dependencies
             
             if [ $version2_5 = 1 ]
