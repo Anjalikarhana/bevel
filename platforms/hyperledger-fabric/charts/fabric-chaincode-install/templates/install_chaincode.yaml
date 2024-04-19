@@ -69,7 +69,7 @@ spec:
         - name: MOUNT_PATH
           value: /secret
         - name: NETWORK_VERSION
-          value: "{{ $.Values.metadata.network.version }}"
+          value: "2.2.2"
         - name: VAULT_TYPE
           value: "{{ $.Values.vault.type }}"
         command: ["sh", "-c"]
@@ -176,7 +176,7 @@ spec:
             mkdir -p $GOPATH/src/github.com/chaincode
             cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
-            mkdir -p $GOPATH/bin && curl https://raw.githubusercontent.com/hyperledger/bevel/main/platforms/hyperledger-fabric/scripts/install.sh | sh
+            mkdir -p $GOPATH/bin 
 
             # Set Go version (example: Go 1.17)
             export GOLANG_VERSION="2.22"  # Update this with the desired Go version
