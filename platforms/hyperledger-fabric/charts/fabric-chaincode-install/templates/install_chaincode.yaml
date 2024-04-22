@@ -144,9 +144,9 @@ spec:
           . /scripts/package-manager.sh
 
           
-
           ## Git repository clone for chaincode
           GOPATH="/root/go"
+          go version
           mkdir -p $GOPATH 
 
           # Define the packages to install
@@ -184,7 +184,15 @@ spec:
 
           ## Installing chaincode on a peer
            peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
-            echo "Chaincode installed for Fabric v.2.2.2"
+           echo "Chaincode installed for Fabric v.2.X"
+            ## Check if chaincode got installed 
+            INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
+              jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
+            if ! [ -n "${INSTALLED}" ]
+            then
+              echo "Error while installing chaincode, exiting.."
+              exit 1
+            fi
           fi
 
           #query installed
