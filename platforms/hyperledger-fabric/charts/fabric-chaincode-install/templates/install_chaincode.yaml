@@ -141,9 +141,7 @@ spec:
         - |-
           #!/bin/bash sh
 
-          . /scripts/package-manager.sh
-
-          
+  
           ## Git repository clone for chaincode
           GOPATH="/root/go"
           mkdir -p $GOPATH 
