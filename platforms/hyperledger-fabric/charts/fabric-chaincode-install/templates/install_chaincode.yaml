@@ -146,7 +146,6 @@ spec:
           
           ## Git repository clone for chaincode
           GOPATH="/root/go"
-          go version
           mkdir -p $GOPATH 
 
           # Define the packages to install
@@ -181,18 +180,18 @@ spec:
 
           #chaincode path
           CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
-
-          ## Installing chaincode on a peer
+           fi
+           ## Installing Chaincode
            peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
            echo "Chaincode installed for Fabric v.2.X"
-            ## Check if chaincode got installed 
-            INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
-              jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
-            if ! [ -n "${INSTALLED}" ]
-            then
-              echo "Error while installing chaincode, exiting.."
-              exit 1
-            fi
+           ## Check if chaincode got installed 
+           INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
+             jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
+           if ! [ -n "${INSTALLED}" ]
+           then
+             echo "Error while installing chaincode, exiting.."
+             exit 1
+           fi
           fi
 
           #query installed
