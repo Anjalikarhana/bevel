@@ -143,6 +143,7 @@ spec:
 
   
           ## Git repository clone for chaincode
+          export GOPATH="/root/go"
           GOPATH="/root/go"
           mkdir -p $GOPATH 
 
