@@ -141,17 +141,25 @@ spec:
         - |-
           #!/bin/bash sh
 
-  
+          # Download Go 1.16 binary distribution
+          curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
+
+          # Extract the downloaded archive
+          tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+
+          # Remove the downloaded archive
+          rm go1.16.linux-amd64.tar.gz
           ## Git repository clone for chaincode
+
+          
+          # Set GOPATH
+          export GOROOT=/usr/local/go
+          export PATH=$GOROOT/bin:$PATH
           export GOPATH="/root/go"
-          GOPATH="/root/go"
           mkdir -p $GOPATH 
 
 
-          # Define the packages to install
-          packages_to_install="openssh-client git"
-          install_packages "$packages_to_install"
-
+          # Create directory
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
           git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
