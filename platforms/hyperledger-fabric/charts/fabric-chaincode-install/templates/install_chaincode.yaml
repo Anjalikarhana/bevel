@@ -179,17 +179,40 @@ spec:
 
           go mod vendor
 
-          #chaincode path
-          cd $GOPATH/src/github.com/chaincode/ 
-          go mod init github.com/chaincode
-          go get github.com/hyperledger/fabric/common/util@v1.4
-          go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4 
-          go get github.com/hyperledger/fabric/protos/peer@v1.4
-          go get github.com/hyperledger/fabric-protos-go
+          cd $GOPATH/src/github.com/chaincode/
+
+          # Initialize Go module if it doesn't exist
+          if [ ! -f go.mod ]; then
+              go mod init github.com/chaincode
+          fi
+
+          # Replace import paths in go.mod file
+          go mod edit -replace="golang.org/x/net=github.com/golang/net@v0.0.0-20190813141303-74dc4d7220e7"
+          go mod edit -replace="golang.org/x/sys=github.com/golang/sys@v0.0.0-20190813064441-fde4db37ae7a"
+          go mod edit -replace="golang.org/x/text=github.com/golang/text@v0.3.2"
+          go mod edit -replace="google.golang.org/genproto=github.com/googleapis/go-genproto@v0.0.0-20190819201941-24fa4b261c55"
+
+          # Check if the vendor directory exists
+          if [ ! -d vendor ]; then
+           # Install required dependencies
+            go get github.com/hyperledger/fabric/common/util@v1.4
+            go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
+            go get github.com/hyperledger/fabric/protos/peer@v1.4
+            go get github.com/hyperledger/fabric-protos-go
+
+          # Tidy up module dependencies
           go mod tidy
+
+           # Vendor dependencies
           GO111MODULE=on go mod vendor
-          ls 
+          fi
+
+          # List contents of the directory
+          ls
+          cat go.mod
+          # Move back to the parent directory
           cd ../
+
 
 
           CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
