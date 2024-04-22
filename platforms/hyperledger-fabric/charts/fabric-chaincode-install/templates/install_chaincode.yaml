@@ -141,22 +141,22 @@ spec:
         - |-
           #!/bin/bash sh
 
-          # Download Go 1.16 binary distribution
-          curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
+           # Download Go 1.16 binary distribution
+           curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
 
-          # Extract the downloaded archive
-          tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+           # Extract the downloaded archive
+           tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
 
-          # Remove the downloaded archive
-          rm go1.16.linux-amd64.tar.gz
-          ## Git repository clone for chaincode
+           # Remove the downloaded archive
+           rm go1.16.linux-amd64.tar.gz
+           ## Git repository clone for chaincode
 
           
-          # Set GOPATH
-          export GOROOT=/usr/local/go
-          export PATH=$GOROOT/bin:$PATH
-          export GOPATH="/root/go"
-          mkdir -p $GOPATH 
+           # Set GOPATH
+           export GOROOT=/usr/local/go
+           export PATH=$GOROOT/bin:$PATH
+           export GOPATH="/root/go"
+           mkdir -p $GOPATH 
 
 
           # Create directory
