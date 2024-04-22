@@ -159,15 +159,11 @@ spec:
           cd /tmp && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode > git.log 2>&1
 
           ## Check if the repository was cloned correctly
-          # if [ $? -ne 0 ]; then
-          #     cat git.log
-          #     exit 1
-          # fi
-          if [ $? -eq 0 ]; then
-             echo "Chaincode cloning successful"
-          else
-              echo "Error: Chaincode cloning failed"
+          if [ $? -ne 0 ]; then
+              cat git.log
+              exit 1
           fi
+         
 
           ls
           echo $GOPATH
@@ -176,7 +172,7 @@ spec:
           ## Copying desired chaincode to a location relative to $GOPATH/src
           mkdir -p $GOPATH/src/github.com/chaincode
           cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
-          cd $GOPATH/src/github.com/chaincode/ && ls
+         
           # Get dependencies
           if [ -d "vendor" ]; then
              rm -rf vendor # Remove existing vendor directory
