@@ -148,9 +148,6 @@ spec:
           GOPATH="/root/go"
           mkdir -p $GOPATH 
 
-          # Check Go version
-          go_version=$(go version)
-          echo "Go version: $go_version"
 
           # Define the packages to install
           packages_to_install="openssh-client git"
