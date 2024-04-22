@@ -141,7 +141,6 @@ spec:
         - |-
           #!/bin/bash sh
 
-          . /scripts/package-manager.sh
 
           ## Git repository clone for chaincode
           version2_5=`echo $NETWORK_VERSION | grep -c 2.5`
