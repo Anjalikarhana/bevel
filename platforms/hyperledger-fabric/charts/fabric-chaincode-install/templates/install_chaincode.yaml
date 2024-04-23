@@ -167,6 +167,7 @@ spec:
 
           ls
           echo $GOPATH
+          apt-get update && apt-get install -y curl
           curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
     
           # Extract the downloaded archive
