@@ -156,24 +156,26 @@ spec:
           fi
           }
 
-           # Download and install Go 1.16 if necessary
-          while ! check_go_version; do
-            echo "Downloading and installing Go 1.16..."
+          # Check Go version
+          if ! check_go_version; then
+             echo "Downloading and installing Go 1.16..."
     
-            # Download Go 1.16 binary distribution
+             # Download Go 1.16 binary distribution
             curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
     
-            # Extract the downloaded archive
-            tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+             # Extract the downloaded archive
+             tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
     
             # Remove the downloaded archive
             rm go1.16.linux-amd64.tar.gz
     
-            echo "Go 1.16 installed successfully."
-            done
+           echo "Go 1.16 installed successfully."
+          else
+           echo "Go version is up to date, no need to install."
+          fi
 
-            # Ensure Go version is 1.16 or higher before proceeding
-            echo "Go version is up to date, proceeding with other tasks..."
+          # Ensure Go version is 1.16 or higher before proceeding
+          echo "Go version is up to date, proceeding with other tasks..."
 
 
           
