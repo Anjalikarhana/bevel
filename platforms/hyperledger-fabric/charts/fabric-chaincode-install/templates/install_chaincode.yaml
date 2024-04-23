@@ -176,11 +176,7 @@ spec:
           export GOPATH=/opt/gopath
           mkdir -p $GOPATH/bin
           export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-          source ~/.bashrc
-
-
          
-
           echo "Go environment variables set up successfully."
 
           if [ ${CC_RUNTIME_LANGUAGE} = "golang" ]; then
