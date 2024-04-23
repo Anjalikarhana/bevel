@@ -167,13 +167,26 @@ spec:
          
 
           ls
-         
-      
-          wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local
+
+          # Download and extract Go 1.16
+          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local; then
+              echo "Go 1.16 downloaded and extracted successfully."
+          else
+            echo "Failed to download or extract Go 1.16. Exiting..."
+            exit 1
+          fi
+
+          # Set up environment variables
           export GOROOT=/usr/local/go
           export GOPATH=/opt/gopath
           mkdir -p $GOPATH/bin
           export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
+          # Wait for 5 seconds before continuing
+          echo "Waiting for 5 seconds..."
+          sleep 5
+
+          echo "Go environment variables set up successfully."
 
           if [ ${CC_RUNTIME_LANGUAGE} = "golang" ]; then
           ## Copying desired chaincode to a location relative to $GOPATH/src
