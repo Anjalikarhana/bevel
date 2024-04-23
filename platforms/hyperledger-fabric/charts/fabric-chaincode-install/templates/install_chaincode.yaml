@@ -144,6 +144,7 @@ spec:
           # Function to check the installed Go version
           check_go_version() {
           installed_version=$(go version | awk '{print $3}')
+           echo "go version is $installed_version"
           required_version="1.16"
     
           if [[ "$installed_version" < "$required_version" ]]; then
