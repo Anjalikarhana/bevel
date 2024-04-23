@@ -170,6 +170,13 @@ spec:
 
           ls
           echo $GOPATH
+          curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
+    
+          # Extract the downloaded archive
+          tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+    
+          # Remove the downloaded archive
+          rm go1.16.linux-amd64.tar.gz
 
           if [ ${CC_RUNTIME_LANGUAGE} = "golang" ]; then
           ## Copying desired chaincode to a location relative to $GOPATH/src
