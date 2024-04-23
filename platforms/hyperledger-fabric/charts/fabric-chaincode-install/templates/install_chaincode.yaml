@@ -142,11 +142,6 @@ spec:
           #!/bin/bash sh
 
           . /scripts/package-manager.sh
-
-          
-          # Set GOPATH
-          export GOPATH="/root/go"
-          mkdir -p $GOPATH 
            
           # Define the packages to install
             packages_to_install="curl openssh"
@@ -182,9 +177,7 @@ spec:
           mkdir -p $GOPATH/bin
           export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 
-          # Wait for 5 seconds before continuing
-          echo "Waiting for 5 seconds..."
-          sleep 5
+         
 
           echo "Go environment variables set up successfully."
 
@@ -195,11 +188,7 @@ spec:
       
 
           cd $GOPATH/src/github.com/chaincode/
-
-          # Initialize Go module if it doesn't exist
-          if [ ! -f go.mod ]; then
-              go mod init github.com/chaincode
-          fi
+          go mod init github.com/chaincode
 
           # Replace import paths in go.mod file
           go mod edit -replace="golang.org/x/net=github.com/golang/net@v0.0.0-20190813141303-74dc4d7220e7"
