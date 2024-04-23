@@ -141,42 +141,7 @@ spec:
         - |-
           #!/bin/bash sh
 
-          # Function to check the installed Go version
-          check_go_version() {
-             installed_version=$(go version | awk '{print $3}')
-             installed_version_numeric=$(echo "$installed_version" | cut -d '.' -f 2)
-             required_version_numeric="16"
-    
-          if ((  required_version_numeric => "14" )); then
-            echo "Installed Go version is $installed_version, which is older than 1.16."
-            return 1
-          else
-            echo "Installed Go version is up to date."
-            return 0
-          fi
-          }
-
-          # Check Go version
-          if ! check_go_version; then
-             echo "Downloading and installing Go 1.16..."
-    
-             # Download Go 1.16 binary distribution
-            curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
-    
-             # Extract the downloaded archive
-             tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
-    
-            # Remove the downloaded archive
-            rm go1.16.linux-amd64.tar.gz
-    
-           echo "Go 1.16 installed successfully."
-          else
-           echo "Go version is up to date, no need to install."
-          fi
-
-          # Ensure Go version is 1.16 or higher before proceeding
-          echo "Go version is up to date, proceeding with other tasks..."
-
+          . /scripts/package-manager.sh
 
           
           # Set GOPATH
@@ -184,6 +149,10 @@ spec:
           export PATH=$GOROOT/bin:$PATH
           export GOPATH="/root/go"
           mkdir -p $GOPATH 
+           
+          # Define the packages to install
+            packages_to_install="curl openssh"
+            install_packages "$packages_to_install"
 
 
           # Create directory
