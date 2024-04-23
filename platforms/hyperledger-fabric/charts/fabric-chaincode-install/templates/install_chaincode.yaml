@@ -143,42 +143,38 @@ spec:
 
           # Function to check the installed Go version
           check_go_version() {
-          installed_version=$(go version | awk '{print $3}')
-           echo "go version is $installed_version"
-          required_version="1.16"
+             installed_version=$(go version | awk '{print $3}')
+             installed_version_numeric=$(echo "$installed_version" | cut -d '.' -f 2)
+             required_version_numeric="16"
     
-          if [[ "$installed_version" < "$required_version" ]]; then
-           echo "Installed Go version is $installed_version, which is older than $required_version."
-           return 1
+          if (( installed_version_numeric < required_version_numeric )); then
+            echo "Installed Go version is $installed_version, which is older than 1.16."
+            return 1
           else
-          echo "Installed Go version is up to date."
-          return 0
-           fi
+            echo "Installed Go version is up to date."
+            return 0
+          fi
           }
 
-          # Download and install Go 1.16 if necessary
-          if ! check_go_version; then
-          echo "Downloading and installing Go 1.16..."
+           # Download and install Go 1.16 if necessary
+          while ! check_go_version; do
+            echo "Downloading and installing Go 1.16..."
     
-          # Download Go 1.16 binary distribution
-          curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
+            # Download Go 1.16 binary distribution
+            curl -LO https://golang.org/dl/go1.16.linux-amd64.tar.gz
     
-          # Extract the downloaded archive
-          tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
+            # Extract the downloaded archive
+            tar -C /usr/local -xzf go1.16.linux-amd64.tar.gz
     
-          # Remove the downloaded archive
-          rm go1.16.linux-amd64.tar.gz
+            # Remove the downloaded archive
+            rm go1.16.linux-amd64.tar.gz
     
-          echo "Go 1.16 installed successfully."
-          else
-          echo "Go version is up to date, no need to install."
-          fi
+            echo "Go 1.16 installed successfully."
+            done
 
-          # Ensure Go version is 1.16 or higher before proceeding
-          if ! check_go_version; then
-           echo "ERROR: Unable to update Go version to 1.16 or higher. Exiting."
-           exit 1
-          fi
+            # Ensure Go version is 1.16 or higher before proceeding
+            echo "Go version is up to date, proceeding with other tasks..."
+
 
           
           # Set GOPATH
