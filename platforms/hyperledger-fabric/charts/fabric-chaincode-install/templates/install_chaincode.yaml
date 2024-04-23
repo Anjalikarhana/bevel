@@ -169,7 +169,7 @@ spec:
           ls
 
           # Download and extract Go 1.16
-          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - | sudo tar -xz -C /usr/local; then
+          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local; then
               echo "Go 1.16 downloaded and extracted successfully."
           else
             echo "Failed to download or extract Go 1.16. Exiting..."
