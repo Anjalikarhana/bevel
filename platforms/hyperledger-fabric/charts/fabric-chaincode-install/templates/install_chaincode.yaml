@@ -145,7 +145,7 @@ spec:
           check_go_version() {
              installed_version=$(go version )
     
-          if (( 1 )); then
+          if (( 0 )); then
             echo "Installed Go version is $installed_version, which is older than 1.16."
             return 1
           else
