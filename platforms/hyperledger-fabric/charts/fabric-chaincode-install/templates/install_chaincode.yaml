@@ -141,11 +141,11 @@ spec:
         - |-
           #!/bin/bash sh
 
-          . /scripts/package-manager.sh
+          # . /scripts/package-manager.sh
            
-          # Define the packages to install
-            packages_to_install="curl openssh"
-            install_packages "$packages_to_install"
+          # # Define the packages to install
+          #   packages_to_install="curl openssh"
+          #   install_packages "$packages_to_install"
 
 
           # Create directory
