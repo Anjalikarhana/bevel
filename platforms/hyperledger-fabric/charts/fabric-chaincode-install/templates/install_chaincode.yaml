@@ -147,6 +147,9 @@ spec:
             packages_to_install="curl openssh"
             install_packages "$packages_to_install"
 
+          GOPATH="/root/go"
+          mkdir -p $GOPATH
+
 
           # Create directory
           mkdir -p /root/.ssh/     
@@ -162,10 +165,9 @@ spec:
          
           ls
 
-          # Download and extract Go 1.16
-          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /root/go; then
-              echo "Go 1.16 downloaded and extracted successfully."
-              ls -l /root/go/bin
+          # Download and extract Go 1.17
+          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root/; then
+              echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
               export GOROOT=/root/go
               export GOPATH=/opt/gopath
@@ -179,7 +181,7 @@ spec:
          
               echo "Go environment variables set up successfully."
           else
-            echo "Failed to download or extract Go 1.16. Exiting..."
+            echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
           fi
 
@@ -192,18 +194,22 @@ spec:
              go mod init github.com/chaincode
 
              # Replace import paths in go.mod file
-             go mod edit -replace="golang.org/x/net=github.com/golang/net@v0.0.0-20190813141303-74dc4d7220e7"
-             go mod edit -replace="golang.org/x/sys=github.com/golang/sys@v0.0.0-20190813064441-fde4db37ae7a"
-             go mod edit -replace="golang.org/x/text=github.com/golang/text@v0.3.2"
-             go mod edit -replace="google.golang.org/genproto=github.com/googleapis/go-genproto@v0.0.0-20190819201941-24fa4b261c55"
+             go mod edit -replace="github.com/golang/protobuf v1.5.3" // indirect
+             go mod edit -replace="golang.org/x/net v0.17.0" // indirect
+             go mod edit -replace="golang.org/x/sys v0.13.0" // indirect
+             go mod edit -replace="golang.org/x/text v0.13.0" // indirect
+             go mod edit -replace="google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1" // indirect
+             go mod edit -replace="google.golang.org/grpc v1.56.3" // indirect
+             go mod edit -replace="google.golang.org/protobuf v1.33.0" // indirect
 
             # Check if the vendor directory exists
             if [ ! -d vendor ]; then
-               # Install required dependencies
-               go get github.com/hyperledger/fabric/common/util@v1.4
-               go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
-               go get github.com/hyperledger/fabric/protos/peer@v1.4
-               go get github.com/hyperledger/fabric-protos-go
+              # Install required dependencies
+              go get github.com/hyperledger/fabric/common/util@v1.4
+              go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
+              go get github.com/hyperledger/fabric/protos/peer@v1.4
+              go get github.com/benbjohnson/clock v1.3.5
+              go get github.com/hyperledger/fabric-protos-go v0.3.0
 
               # Tidy up module dependencies
               go mod tidy
