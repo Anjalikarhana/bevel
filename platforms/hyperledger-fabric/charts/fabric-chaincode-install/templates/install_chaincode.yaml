@@ -147,11 +147,6 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
-
-          #remove go version 1.14
-          rm -rvf /usr/local/go
-          
-
           # Create directory
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
