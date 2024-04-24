@@ -139,12 +139,12 @@ spec:
         command: ["sh", "-c"]
         args:
         - |-
-          #!/bin/bash sh
+          #!/bin/bash 
 
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh"
+          packages_to_install="apt-get curl openssh"
           install_packages "$packages_to_install"
 
           #install nano editor
