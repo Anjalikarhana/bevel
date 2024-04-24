@@ -144,8 +144,12 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-            packages_to_install="curl openssh"
+            packages_to_install="curl openssh gcc"
             install_packages "$packages_to_install"
+
+          #remove go version 1.14
+          rm -rf /root/go
+          rm /root/go/bin/go
 
 
           # Create directory
@@ -205,8 +209,8 @@ spec:
               go get github.com/hyperledger/fabric/common/util@v1.4
               go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
               go get github.com/hyperledger/fabric/protos/peer@v1.4
-              go get github.com/benbjohnson/clock v1.3.5
-              go get github.com/hyperledger/fabric-protos-go v0.3.0
+              go get github.com/benbjohnson/clock@v1.3.5
+              go get github.com/hyperledger/fabric-protos-go@v0.3.0
 
               # Tidy up module dependencies
               go mod tidy
