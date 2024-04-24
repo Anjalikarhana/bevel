@@ -147,9 +147,6 @@ spec:
             packages_to_install="curl openssh"
             install_packages "$packages_to_install"
 
-          GOPATH="/root/go"
-          mkdir -p $GOPATH
-
 
           # Create directory
           mkdir -p /root/.ssh/     
