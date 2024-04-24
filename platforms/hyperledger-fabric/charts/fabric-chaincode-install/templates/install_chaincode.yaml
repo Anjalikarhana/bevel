@@ -165,8 +165,7 @@ spec:
           # Download and extract Go 1.16
           if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /root/go; then
               echo "Go 1.16 downloaded and extracted successfully."
-              pwd
-              ls -l /root/go/bin/go
+              ls -l /root/go/bin
               # Set up environment variables
               export GOROOT=/root/go
               export GOPATH=/opt/gopath
