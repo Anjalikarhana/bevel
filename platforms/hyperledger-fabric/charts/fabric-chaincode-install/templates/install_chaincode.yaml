@@ -163,13 +163,20 @@ spec:
           ls
 
           # Download and extract Go 1.16
-          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /root/; then
+          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /root/go; then
               echo "Go 1.16 downloaded and extracted successfully."
+              pwd
+              ls -l /root/go/bin/go
               # Set up environment variables
               export GOROOT=/root/go
               export GOPATH=/opt/gopath
               mkdir -p $GOPATH/bin
-              export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+              export PATH=$GOROOT/bin:$PATH
+              export GOROOT=/root/go
+              echo "GOROOT set to: $GOROOT"
+              echo "GOPATH set to: $GOPATH"
+              echo "PATH set to: $PATH"
+              echo "go version: $(go version)"
          
               echo "Go environment variables set up successfully."
           else
