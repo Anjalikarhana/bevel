@@ -144,7 +144,7 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh nano"
+          packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
           #install nano editor
@@ -187,6 +187,8 @@ spec:
               echo "go version: $(go version )"
               source ~/.bashrc
               echo "Go environment variables set up successfully."
+              cd /usr/local/go && ls
+              cd ../../../
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
