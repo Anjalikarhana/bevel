@@ -144,11 +144,9 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="apt-get curl openssh"
+          packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
-          #install nano editor
-          apt-get install nano -y
 
           #remove go version 1.14
           whereis go
