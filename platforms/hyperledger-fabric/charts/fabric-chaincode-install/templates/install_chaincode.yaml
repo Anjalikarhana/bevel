@@ -160,11 +160,10 @@ spec:
               exit 1
           fi
          
-
           ls
 
           # Download and extract Go 1.16
-          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local; then
+          if wget -c https://dl.google.com/go/go1.16.linux-amd64.tar.gz -O - |  tar -xz -C /root/; then
               echo "Go 1.16 downloaded and extracted successfully."
               # Set up environment variables
               export GOROOT=/root/go
@@ -214,9 +213,6 @@ spec:
             # Move back to the parent directory
             cd ../
           fi
-
-
-
 
           CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
            echo "Installing Chaincode for ${NETWORK_VERSION}"
