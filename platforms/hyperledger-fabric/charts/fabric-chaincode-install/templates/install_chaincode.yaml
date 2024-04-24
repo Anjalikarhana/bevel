@@ -144,13 +144,13 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-            packages_to_install="apt-get curl openssh gcc"
+            packages_to_install="curl openssh gcc"
             install_packages "$packages_to_install"
 
           #remove go version 1.14
-          whereis go
-          apt-get remove golang-go
-          rm -rvf /usr/local/go
+           whereis go
+           apt-get remove golang-go
+           rm -rvf /usr/local/go
           
 
 
