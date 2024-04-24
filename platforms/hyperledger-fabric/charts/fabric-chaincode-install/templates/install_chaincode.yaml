@@ -171,6 +171,7 @@ spec:
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local; then
               echo "Go 1.17 downloaded and extracted successfully."
+              cat ~/.bashrc
               # Set up environment variables
               export GOROOT="/usr/local/go"
               export GOPATH="/opt/gopath"
@@ -179,7 +180,7 @@ spec:
               echo "GOROOT set to: $GOROOT"
               echo "GOPATH set to: $GOPATH"
               echo "PATH set to: $PATH"
-              echo "go version: $(go version && go env)"
+              echo "go version: $(go version )"
          
               echo "Go environment variables set up successfully."
           else
