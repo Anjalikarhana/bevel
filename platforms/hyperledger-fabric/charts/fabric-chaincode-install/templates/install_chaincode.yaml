@@ -161,24 +161,24 @@ spec:
          
           ls
 
-          # Download and extract Go 1.17
-          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
-              echo "Go 1.17 downloaded and extracted successfully."
-              # Set up environment variables
-              export GOROOT="/usr/local/go"
-              export GOPATH="/opt/gopath"
-              mkdir -p $GOPATH/bin
-              export PATH=$PATH:/usr/local/go/bin
-              go env -w GO111MODULE=auto
-              echo "GOROOT set to: $GOROOT"
-              echo "GOPATH set to: $GOPATH"
-              echo "PATH set to: $PATH"
-              echo "go version: $(go version )"
-              echo "Go environment variables set up successfully."
-          else
-            echo "Failed to download or extract Go 1.17. Exiting..."
-            exit 1
-          fi
+          # # Download and extract Go 1.17
+          # if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
+          #     echo "Go 1.17 downloaded and extracted successfully."
+          #     # Set up environment variables
+          #     export GOROOT="/usr/local/go"
+          #     export GOPATH="/opt/gopath"
+          #     mkdir -p $GOPATH/bin
+          #     export PATH=$PATH:/usr/local/go/bin
+          #     go env -w GO111MODULE=auto
+          #     echo "GOROOT set to: $GOROOT"
+          #     echo "GOPATH set to: $GOPATH"
+          #     echo "PATH set to: $PATH"
+          #     echo "go version: $(go version )"
+          #     echo "Go environment variables set up successfully."
+          # else
+          #   echo "Failed to download or extract Go 1.17. Exiting..."
+          #   exit 1
+          # fi
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
              ## Copying desired chaincode to a location relative to $GOPATH/src
