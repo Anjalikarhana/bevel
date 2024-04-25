@@ -151,6 +151,11 @@ spec:
            #remove go version 1.14
            rm -rf /usr/local/go
           
+          #add nano editor and create Profile 
+          apk add nano
+          cd ~
+          nano .profile
+          
           # Create symbolic link for libc.musl-x86_64.so.1
           mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
@@ -166,10 +171,7 @@ spec:
               exit 1
           fi
          
-          #add nano editor and create Profile 
-          apk add nano
-          cd ~
-          nano .profile
+          
 
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
