@@ -173,10 +173,11 @@ spec:
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
-              export GOROOT="/root/go"
               GOPATH="/root/go"
               mkdir -p $GOPATH
-              export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+              export PATH=$PATH:$GOPATH/bin
+              export GOPROXY=http://mirrors.aliyun.com/goproxy/
+
                      
               
           else
@@ -200,29 +201,23 @@ spec:
              go mod edit -replace="google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1" // indirect
              go mod edit -replace="google.golang.org/grpc v1.56.3" // indirect
              go mod edit -replace="google.golang.org/protobuf v1.33.0" // indirect
+             go get github.com/hyperledger/fabric/common/util@v1.4
+             go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
+             go get github.com/hyperledger/fabric/protos/peer@v1.4
+             go get github.com/benbjohnson/clock@v1.3.5
+             go get github.com/hyperledger/fabric-protos-go@v0.3.0
 
             # Check if the vendor directory exists
             if [ ! -d vendor ]; then
-              # Install required dependencies
-              go get github.com/hyperledger/fabric/common/util@v1.4
-              go get github.com/hyperledger/fabric/core/chaincode/shim@v1.4
-              go get github.com/hyperledger/fabric/protos/peer@v1.4
-              go get github.com/benbjohnson/clock@v1.3.5
-              go get github.com/hyperledger/fabric-protos-go@v0.3.0
 
               # Tidy up module dependencies
               go mod tidy
 
               # Vendor dependencies
               GO111MODULE=on go mod vendor
+              go build -mod=mod
             fi
-
-            # List contents of the directory
-            ls
-            cat go.mod
-
-            # Move back to the parent directory
-            cd ../
+            
           fi
 
           CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
