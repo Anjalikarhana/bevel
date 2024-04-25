@@ -144,7 +144,7 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh nano vi"
+          packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
 
@@ -166,18 +166,21 @@ spec:
               exit 1
           fi
          
-          #giving persmission
-          chmod +w /usr/local
-          chmod +w /root
+          # ADD nano editor and create Profile 
+          apk update
+          apk add nano
+          cd ~
+          nano .profile
 
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
-              export GOROOT="/root/go"
+              export GOROOT="/usr/local/go"
               GOPATH="/root/go"
               mkdir -p $GOPATH
               export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+              source ~/.profile
                      
               
           else
