@@ -144,7 +144,7 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh"
+          packages_to_install="curl openssh .build-deps"
           install_packages "$packages_to_install"
 
 
@@ -164,7 +164,9 @@ spec:
               exit 1
           fi
          
-          
+          #echo "installing go version 1.10.3..." 
+          apk add --no-cache --virtual .build-deps bash gcc musl-dev openssl go 
+
           # Download and extract Go 1.17
           wget -O go.tgz  https://dl.google.com/go/go1.17.linux-amd64.tar.gz 
           tar -C /usr/local -xzf go.tgz 
