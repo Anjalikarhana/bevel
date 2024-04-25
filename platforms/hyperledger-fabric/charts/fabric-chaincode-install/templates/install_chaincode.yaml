@@ -148,8 +148,8 @@ spec:
           install_packages "$packages_to_install"
 
 
-          # #remove go version 1.14
-          # rm -rvf /usr/local/go
+           #remove go version 1.14
+           rm -rf /usr/local/go
           
 
           # Create directory
@@ -173,9 +173,11 @@ spec:
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
+              ls
               export GOROOT=usr/local/go
-              export PATH=${GOROOT}/bin:${PATH}
-          
+              export PATH=$PATH:/usr/local/go/bin
+              export GOPATH=/opt/gopath
+              source $HOME/.profile
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
