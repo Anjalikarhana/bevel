@@ -172,10 +172,9 @@ spec:
           wget -O go.tgz  https://dl.google.com/go/go1.17.linux-amd64.tar.gz 
           tar -C /usr/local -xzf go.tgz 
           #changing directory
-          cd /usr/local/go/bin/ && ls -l
-          ./make.bash 
+          cd /usr/local/go/src/ && ./make.bash 
           export PATH="/usr/local/go/bin:$PATH"
-          export GOPATH=/opt/go/ 
+          export GOPATH="/opt/go/" 
           export PATH=$PATH:$GOPATH/bin 
           apk del .build-deps 
           echo "go version: $(go version)"
