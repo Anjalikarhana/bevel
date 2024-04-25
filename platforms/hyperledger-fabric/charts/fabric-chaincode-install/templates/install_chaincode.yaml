@@ -177,7 +177,7 @@ spec:
               export GOROOT=usr/local/go
               export PATH=$PATH:/usr/local/go/bin
               export GOPATH=/opt/gopath
-              source $HOME/.profile
+             
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
