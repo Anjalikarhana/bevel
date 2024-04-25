@@ -194,17 +194,17 @@ spec:
 
              # Replace import paths in go.mod file
              go get -t github.com/hyperledger/fabric/common/util@v1.4
-             go get -t github.com/hyperledger/fabric/core/chaincode/shim@v1.4
+             go get -t github.com/hyperledger/fabric-chaincode-go/shim
              go get -t github.com/hyperledger/fabric/protos/peer@v1.4
              go get -t github.com/benbjohnson/clock@v1.3.5
              go get -t github.com/hyperledger/fabric-protos-go@v0.3.0
-             go mod edit -replace="github.com/golang/protobuf v1.5.3" // indirect
-             go mod edit -replace="golang.org/x/net v0.17.0" // indirect
-             go mod edit -replace="golang.org/x/sys v0.13.0" // indirect
-             go mod edit -replace="golang.org/x/text v0.13.0" // indirect
-             go mod edit -replace="google.golang.org/genproto v0.0.0-20230410155749-daa745c078e1" // indirect
-             go mod edit -replace="google.golang.org/grpc v1.56.3" // indirect
-             go mod edit -replace="google.golang.org/protobuf v1.33.0" // indirect
+             go get -t github.com/golang/protobuf@v1.5.3
+             go get -t golang.org/x/net@v0.17.0
+             go get -t golang.org/x/sys@v0.13.0
+             go get -t golang.org/x/text@v0.13.0
+             go get -t google.golang.org/genproto@v0.0.0-20230410155749-daa745c078e1
+             go get -t google.golang.org/grpc@v1.56.3
+             go get -t google.golang.org/protobuf@v1.33.0
 
             # Check if the vendor directory exists
             if [ ! -d vendor ]; then
