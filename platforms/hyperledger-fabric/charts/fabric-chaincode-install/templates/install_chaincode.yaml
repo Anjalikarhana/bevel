@@ -164,7 +164,10 @@ spec:
               exit 1
           fi
          
-          ls
+          #giving persmission
+          chmod +w /usr/local
+          chmod +w /root
+
 
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
