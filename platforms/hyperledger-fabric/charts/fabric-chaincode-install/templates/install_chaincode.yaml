@@ -151,6 +151,8 @@ spec:
            #remove go version 1.14
            rm -rf /usr/local/go
           
+          # Create symbolic link for libc.musl-x86_64.so.1
+          mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
           # Create directory
           mkdir -p /root/.ssh/     
@@ -175,10 +177,7 @@ spec:
               export GOROOT=/usr/lib/go
               export GOPATH=$HOME/go
               export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-              source ~/.zshrc
-
-              # Create symbolic link for libc.musl-x86_64.so.1
-              mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+                     
               
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
