@@ -168,24 +168,18 @@ spec:
           chmod +w /usr/local
           chmod +w /root
 
-          #listing directories
-          ll
-          cd /home 
-          ll
-          cd ../
-          
-          #looking for bashrc
-          whereis bashrc
-
-
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
-              cp /usr/local/go/bin/* ~/bin/
               export GOROOT=usr/local/go
               export PATH=$PATH:/usr/local/go/bin
               export GOPATH=/opt/gopath
+
+              # Create symbolic link for libc.musl-x86_64.so.1
+              mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
+              
+
              
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
