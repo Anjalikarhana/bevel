@@ -144,7 +144,7 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh make"
+          packages_to_install="curl openssh build-essential"
           install_packages "$packages_to_install"
 
           #check os version
@@ -166,13 +166,14 @@ spec:
           fi
          
           #echo "installing go version 1.10.3..." 
-          apk add --no-cache --virtual .build-deps bash gcc musl-dev openssl go 
+          apk add --no-cache --virtual build-essential .build-deps bash gcc musl-dev openssl go 
 
           # Download and extract Go 1.17
           wget -O go.tgz  https://dl.google.com/go/go1.17.linux-amd64.tar.gz 
           tar -C /usr/local -xzf go.tgz 
           #changing directory
           cd /usr/local/go/src/ && ./make.bash 
+          cat bash
           export PATH="/usr/local/go/bin:$PATH"
           export GOPATH="/opt/go/" 
           export PATH=$PATH:$GOPATH/bin 
