@@ -193,18 +193,23 @@ spec:
              go mod init github.com/chaincode
 
              # Replace import paths in go.mod file
-             go get -t github.com/hyperledger/fabric/common/util@v1.4
-             go get -t github.com/hyperledger/fabric-chaincode-go/shim
-             go get -t github.com/hyperledger/fabric/protos/peer@v1.4
-             go get -t github.com/benbjohnson/clock@v1.3.5
-             go get -t github.com/hyperledger/fabric-protos-go@v0.3.0
-             go get -t github.com/golang/protobuf@v1.5.3
-             go get -t golang.org/x/net@v0.17.0
-             go get -t golang.org/x/sys@v0.13.0
-             go get -t golang.org/x/text@v0.13.0
-             go get -t google.golang.org/genproto@v0.0.0-20230410155749-daa745c078e1
-             go get -t google.golang.org/grpc@v1.56.3
-             go get -t google.golang.org/protobuf@v1.33.0
+             go install -t github.com/hyperledger/fabric@2.2.2
+             go install -t github.com/hyperledger/fabric/common/util@v1.4
+             go install -t github.com/hyperledger/fabric-chaincode-go/shim
+             go install -t github.com/hyperledger/fabric/core/chaincode/shim
+             go install -t github.com/hyperledger/fabric/protos/peer@v1.4
+             go install -t github.com/benbjohnson/clock@v1.3.5
+             go install -t github.com/hyperledger/fabric-protos-go@v0.3.0
+             go install github.com/hyperledger/fabric/protos/msp
+             go install -t github.com/golang/protobuf@v1.3.1
+             go install github.com/golang/protobuf/proto
+             go install -t github.com/franela/goblin@v0.0.2
+             go install -t golang.org/x/net@v0.17.0
+             go install -t golang.org/x/sys@v0.13.0
+             go install -t golang.org/x/text@v0.13.0
+             go install -t google.golang.org/genproto@v0.0.0-20230410155749-daa745c078e1
+             go install -t google.golang.org/grpc@v1.56.3
+             go install -t google.golang.org/protobuf@v1.33.0
 
             # Check if the vendor directory exists
             if [ ! -d vendor ]; then
@@ -215,6 +220,7 @@ spec:
               # Vendor dependencies
               GO111MODULE=on go mod vendor
               go build -mod=mod
+              cat go.mod
             fi
 
           fi
