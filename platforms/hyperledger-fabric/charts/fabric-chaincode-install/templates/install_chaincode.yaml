@@ -177,8 +177,7 @@ spec:
               mkdir -p $GOPATH
               export PATH=$PATH:$GOPATH/bin
 
-                     
-              
+  
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
@@ -193,23 +192,23 @@ spec:
              go mod init github.com/chaincode
 
              # Replace import paths in go.mod file
-             go install  github.com/hyperledger/fabric@2.2.2
-             go install  github.com/hyperledger/fabric/common/util@v1.4
-             go install  github.com/hyperledger/fabric-chaincode-go/shim
-             go install  github.com/hyperledger/fabric/core/chaincode/shim
-             go install  github.com/hyperledger/fabric/protos/peer@v1.4
-             go install  github.com/benbjohnson/clock@v1.3.5
-             go install  github.com/hyperledger/fabric-protos-go@v0.3.0
+             go install github.com/hyperledger/fabric@2.2.2
+             go install github.com/hyperledger/fabric/common/util@v1.4
+             go install github.com/hyperledger/fabric-chaincode-go/shim
+             go install github.com/hyperledger/fabric/core/chaincode/shim
+             go install github.com/hyperledger/fabric/protos/peer@v1.4
+             go install github.com/benbjohnson/clock@v1.3.5
+             go install github.com/hyperledger/fabric-protos-go@v0.3.0
              go install github.com/hyperledger/fabric/protos/msp
-             go install  github.com/golang/protobuf@v1.3.1
+             go install github.com/golang/protobuf@v1.3.1
              go install github.com/golang/protobuf/proto
-             go install  github.com/franela/goblin@v0.0.2
-             go install  golang.org/x/net@v0.17.0
-             go install  golang.org/x/sys@v0.13.0
-             go install  golang.org/x/text@v0.13.0
-             go install  google.golang.org/genproto@v0.0.0-20230410155749-daa745c078e1
-             go install  google.golang.org/grpc@v1.56.3
-             go install  google.golang.org/protobuf@v1.33.0
+             go install github.com/franela/goblin@v0.0.2
+             go install golang.org/x/net@v0.17.0
+             go install golang.org/x/sys@v0.13.0
+             go install golang.org/x/text@v0.13.0
+             go install google.golang.org/genproto@v0.0.0-20230410155749-daa745c078e1
+             go install google.golang.org/grpc@v1.56.3
+             go install google.golang.org/protobuf@v1.33.0
 
             # Check if the vendor directory exists
             if [ ! -d vendor ]; then
