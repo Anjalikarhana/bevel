@@ -166,8 +166,7 @@ spec:
               exit 1
           fi
          
-          # ADD nano editor and create Profile 
-          apk update
+          #add nano editor and create Profile 
           apk add nano
           cd ~
           nano .profile
