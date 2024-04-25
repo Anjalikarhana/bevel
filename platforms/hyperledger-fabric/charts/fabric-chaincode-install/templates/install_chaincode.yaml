@@ -144,12 +144,12 @@ spec:
           . /scripts/package-manager.sh
            
           # Define the packages to install
-          packages_to_install="curl openssh .build-deps"
+          packages_to_install="curl openssh .build-deps make"
           install_packages "$packages_to_install"
 
 
-          #remove go version 1.14
-          rm -rvf /usr/local/go
+          # #remove go version 1.14
+          # rm -rvf /usr/local/go
           
 
           # Create directory
