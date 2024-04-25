@@ -167,7 +167,7 @@ spec:
           ls
 
           # Download and extract Go 1.17
-          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local && ls; then
+          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
               export GOROOT=$(go1.17 env GOROOT)
