@@ -174,7 +174,6 @@ spec:
               echo "Go 1.17 downloaded and extracted successfully."
               mv /usr/local/go/bin/* ~/bin/
               # Set up environment variables
-              cd ~/bin && ls
               export GOROOT=usr/local/go
               export PATH=$PATH:/usr/local/go/bin
               export GOPATH=/opt/gopath
