@@ -147,6 +147,9 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
+          #creating go directory
+          GOPATH="/root/go"
+          mkdir -p $GOPATH
 
            #remove go version 1.14
            rm -rf /usr/local/go
@@ -155,6 +158,9 @@ spec:
           # Create symbolic link for libc.musl-x86_64.so.1
           mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
+          #download fabric
+          mkdir -p $GOPATH/bin && curl -sSL https://bit.ly/2ysbOFE | bash -s -- 2.2.2 1.4.6 0.4.18
+          export PATH=$GOPATH/bin:$PATH
           # Create directory
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
@@ -173,8 +179,6 @@ spec:
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
-              GOPATH="/root/go"
-              mkdir -p $GOPATH
               export PATH=$PATH:$GOPATH/bin
 
   
@@ -194,6 +198,7 @@ spec:
              # Replace import paths in go.mod file
              go install github.com/hyperledger/fabric@2.2.2
              go install github.com/hyperledger/fabric/common/util@v1.4
+             go get -t github.com/hyperledger/fabric-chaincode-go/shim
              go install github.com/hyperledger/fabric-chaincode-go/shim
              go install github.com/hyperledger/fabric/core/chaincode/shim
              go install github.com/hyperledger/fabric/protos/peer@v1.4
@@ -218,7 +223,10 @@ spec:
 
               # Vendor dependencies
               GO111MODULE=on go mod vendor
-              go build -mod=mod
+              govendor init
+              govendor fetch github.com/golang/protobuf/ptypes/timestamp
+              govendor fetch github.com/hyperledger/fabric/core/chaincode/shim
+              
               cat go.mod
             fi
 
