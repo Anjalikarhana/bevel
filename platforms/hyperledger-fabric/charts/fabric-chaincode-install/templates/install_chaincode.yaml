@@ -200,6 +200,10 @@ spec:
              # Replace import paths in go.mod file
              go install github.com/hyperledger/fabric@v2.2.2
              go install github.com/kardianos/govendor
+             go installgithub.com/hyperledger/fabric-chaincode-go@v0.0.0-20190823162523-04390e015b85
+             go install github.com/hyperledger/fabric-protos-go@v0.0.0-20190821214336-621b908d5022
+             go get -t github.com/hyperledger/fabric-chaincode-go@v0.0.0-20190823162523-04390e015b85
+             go get -t github.com/hyperledger/fabric-protos-go@v0.0.0-20190821214336-621b908d5022
              go install github.com/hyperledger/fabric/common/util@v1.4
              go install github.com/hyperledger/fabric-chaincode-go/shim
              go install github.com/hyperledger/fabric/core/chaincode/shim
