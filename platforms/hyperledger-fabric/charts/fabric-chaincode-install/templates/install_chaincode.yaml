@@ -201,7 +201,6 @@ spec:
              go install github.com/hyperledger/fabric@v2.2.2
              go install github.com/kardianos/govendor
              go install github.com/hyperledger/fabric/common/util@v1.4
-             go get -t github.com/hyperledger/fabric-chaincode-go/shim
              go install github.com/hyperledger/fabric-chaincode-go/shim
              go install github.com/hyperledger/fabric/core/chaincode/shim
              go install github.com/hyperledger/fabric/protos/peer@v1.4
