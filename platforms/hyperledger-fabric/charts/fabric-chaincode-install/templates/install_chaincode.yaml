@@ -147,11 +147,22 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
-         
+          #creating go directory
+          GOPATH="/root/go"
+          mkdir -p $GOPATH
+
+           #remove go version 1.14
+           rm -rf /usr/local/go
+          
+
           # Create symbolic link for libc.musl-x86_64.so.1
           mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
-          
+          #download fabric
+          mkdir -p $GOPATH/src/github.com/hyperledger
+          cd $GOPATH/src/github.com/hyperledger
+          git clone -b release-1.2 https://github.com/hyperledger/fabric.git
+
           # Create directory
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
@@ -169,19 +180,17 @@ spec:
           # Download and extract Go 1.17
           if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
               echo "Go 1.17 downloaded and extracted successfully."
-              #setting env
-              GOPATH="/root/go"
-              mkdir -p $GOPATH
               # Set up environment variables
               export PATH=$PATH:$GOPATH/bin
 
+  
           else
             echo "Failed to download or extract Go 1.17. Exiting..."
             exit 1
           fi
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
-             # Copying desired chaincode to a location relative to $GOPATH/src
+             ## Copying desired chaincode to a location relative to $GOPATH/src
              mkdir -p $GOPATH/src/github.com/chaincode
              cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
@@ -215,6 +224,10 @@ spec:
 
               # Vendor dependencies
               GO111MODULE=on go mod vendor
+              govendor init
+              govendor fetch github.com/golang/protobuf/ptypes/timestamp
+              govendor fetch github.com/hyperledger/fabric/core/chaincode/shim
+              
               cat go.mod
             fi
 
