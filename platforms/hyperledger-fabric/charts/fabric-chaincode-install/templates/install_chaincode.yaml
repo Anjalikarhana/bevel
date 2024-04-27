@@ -158,11 +158,7 @@ spec:
           # Create symbolic link for libc.musl-x86_64.so.1
           mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
-          # #download fabric
-          # mkdir -p $GOPATH/src/github.com/hyperledger
-          # cd $GOPATH/src/github.com/hyperledger
-          # git clone -b release-1.2 https://github.com/hyperledger/fabric.git
-
+          
           # Create directory
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
