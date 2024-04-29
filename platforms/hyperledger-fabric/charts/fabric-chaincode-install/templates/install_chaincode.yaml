@@ -224,9 +224,7 @@ spec:
 
               # Vendor dependencies
               GO111MODULE=on go mod vendor
-              govendor init
-              govendor fetch github.com/golang/protobuf/ptypes/timestamp
-              govendor fetch github.com/hyperledger/fabric/core/chaincode/shim
+              go mod vendor
               
               cat go.mod
             fi
