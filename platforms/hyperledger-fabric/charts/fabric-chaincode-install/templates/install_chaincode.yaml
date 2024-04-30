@@ -177,8 +177,8 @@ spec:
           fi
          
          
-          # Download and extract Go 1.17
-          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
+          # Download and extract Go 1.20
+          if wget -c https://dl.google.com/go/go1.20.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
               echo "Go 1.17 downloaded and extracted successfully."
               # Set up environment variables
               export PATH=$PATH:$GOPATH/bin
