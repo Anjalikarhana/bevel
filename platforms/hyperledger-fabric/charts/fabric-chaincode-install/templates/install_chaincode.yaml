@@ -174,7 +174,7 @@ spec:
          
          
           # Download and extract Go 1.20
-          if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
+          if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ; then
               echo "Go 1.20 downloaded and extracted successfully."
               # Set up environment variables
               export PATH=$PATH:$GOPATH/bin
@@ -195,7 +195,7 @@ spec:
              go mod init github.com/chaincode
              go mod tidy
              go mod vendor
-             
+
              #chaincode path
              CC_SRC_PATH="$GOPATH/src/github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
 
