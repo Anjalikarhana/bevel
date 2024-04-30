@@ -176,15 +176,15 @@ spec:
           fi
          
          
-          # Download and extract Go 1.17
-          if wget -c https://dl.google.com/go/go1.17.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
-              echo "Go 1.17 downloaded and extracted successfully."
+          # Download and extract Go 1.13
+          if wget -c https://dl.google.com/go/go1.13.linux-amd64.tar.gz -O - |  tar -xz -C /root ; then
+              echo "Go 1.13 downloaded and extracted successfully."
               # Set up environment variables
               export PATH=$PATH:$GOPATH/bin
 
   
           else
-            echo "Failed to download or extract Go 1.17. Exiting..."
+            echo "Failed to download or extract Go 1.13. Exiting..."
             exit 1
           fi
 
@@ -201,6 +201,8 @@ spec:
              go install github.com/kardianos/govendor
              go install github.com/hyperledger/fabric-chaincode-go@v0.0.0-20190823162523-04390e015b85
              go install github.com/hyperledger/fabric-protos-go@v0.0.0-20190821214336-621b908d5022
+             go get -t github.com/hyperledger/fabric-chaincode-go/shim@v0.0.0-20240425200701-0431f709af2c
+             go install github.com/hyperledger/fabric-chaincode-go/shim@v0.0.0-20240425200701-0431f709af2c
              go install github.com/hyperledger/fabric/common/util@v1.4
              go install github.com/benbjohnson/clock@v1.3.5
              go install github.com/hyperledger/fabric-protos-go@v0.3.0
