@@ -147,6 +147,8 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
+          #remove go version 1.14
+          rm -rf /usr/local/go
           
 
           # Create symbolic link for libc.musl-x86_64.so.1
