@@ -147,9 +147,7 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
-          #creating go directory
-          GOPATH="/root/go"
-          mkdir -p $GOPATH
+          
 
            #remove go version 1.14
            rm -rf /usr/local/go
@@ -158,7 +156,10 @@ spec:
           # Create symbolic link for libc.musl-x86_64.so.1
           mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 
+
+
           #download fabric
+          GOPATH="/root/go"
           mkdir -p $GOPATH/src/github.com/hyperledger
           cd $GOPATH/src/github.com/hyperledger
           git clone -b release-1.2 https://github.com/hyperledger/fabric.git
@@ -196,15 +197,10 @@ spec:
              cd $GOPATH/src/github.com/chaincode/
              go mod init github.com/chaincode
 
-             go mod tidy
-             go mod vendor
 
              # Replace import paths in go.mod file
-             go install github.com/hyperledger/fabric@v2.2.2
-             go install github.com/kardianos/govendor
              go install github.com/hyperledger/fabric-chaincode-go@v0.0.0-20190823162523-04390e015b85
              go install github.com/hyperledger/fabric-protos-go@v0.0.0-20190821214336-621b908d5022
-             go get -t github.com/hyperledger/fabric-chaincode-go/shim@v0.0.0-20240425200701-0431f709af2c
              go install github.com/hyperledger/fabric-chaincode-go/shim@v0.0.0-20240425200701-0431f709af2c
              go install github.com/hyperledger/fabric/common/util@v1.4
              go install github.com/benbjohnson/clock@v1.3.5
