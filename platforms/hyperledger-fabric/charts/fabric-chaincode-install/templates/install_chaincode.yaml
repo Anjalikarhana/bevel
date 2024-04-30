@@ -191,22 +191,22 @@ spec:
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
              ## Copying desired chaincode to a location relative to $GOPATH/src
+             go env GOPROXY=https://goproxy.io,direct
+             go env GO111MODULE=on
              mkdir -p $GOPATH/src/github.com/chaincode
              cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
 
              cd $GOPATH/src/github.com/chaincode/
              go mod init github.com/chaincode
+             # Check if the vendor directory exists
+             if [ ! -d vendor ]; then
 
+               # Tidy up module dependencies
+               go mod tidy 
 
-            # Check if the vendor directory exists
-            if [ ! -d vendor ]; then
-
-              # Tidy up module dependencies
-              go mod tidy 
-
-              # Vendor dependencies
-              GO111MODULE=on go mod vendor
-              go mod vendor
+               # Vendor dependencies
+               GO111MODULE=on go mod vendor
+               go mod vendor
               
               cat go.mod
             fi
