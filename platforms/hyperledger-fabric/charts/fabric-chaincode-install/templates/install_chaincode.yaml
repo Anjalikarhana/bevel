@@ -199,7 +199,7 @@ spec:
 
           fi
 
-          CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
+          CC_SRC_PATH="github.com/chaincode2/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
            echo "Installing Chaincode for ${NETWORK_VERSION}"
             if [ $PEER_NAME = "peer0" ];then
               ## packaging chaincode
