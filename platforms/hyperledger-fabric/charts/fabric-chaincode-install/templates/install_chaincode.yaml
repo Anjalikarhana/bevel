@@ -212,13 +212,14 @@ spec:
               export CHAINCODE_NAME=${PACKAGE_ID}
               echo "installing ${CHAINCODE_NAME} on ${CORE_PEER_ADDRESS}"
             fi
-            ## Installing Chaincode
-            peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
-            echo "Chaincode installed for Fabric v.2.X"
-            ## Check if chaincode got installed 
-            INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
-              jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
-            if ! [ -n "${INSTALLED}" ]
+
+          # Installing Chaincode
+          peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
+          echo "Chaincode installed for Fabric v.2.X"
+          ## Check if chaincode got installed 
+          INSTALLED=$(peer lifecycle chaincode queryinstalled -O json | jq '.installed_chaincodes?' | \
+          jq --arg CCLABEL "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" '.[]? | select(.label==$CCLABEL)')
+          if ! [ -n "${INSTALLED}" ]
             then
               echo "Error while installing chaincode, exiting.."
               exit 1
