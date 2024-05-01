@@ -178,6 +178,7 @@ spec:
              cd $GOPATH/src/github.com/chaincode/supplychain/cmd
 
              go mod init github.com/chaincode
+             go install github.com/hyperledger/fabric/core/chaincode/shim@v1.4.12
              go mod tidy
              go mod vendor
 
