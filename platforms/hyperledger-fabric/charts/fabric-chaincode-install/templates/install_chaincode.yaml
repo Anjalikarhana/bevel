@@ -177,6 +177,7 @@ spec:
           rm -rf /usr/local/go
          
           # Download and extract Go 1.20
+          rm -rf /usr/local/go
           wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local 
               echo "Go 1.20 downloaded and extracted successfully."
               # Set up environment variables
