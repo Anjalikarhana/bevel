@@ -175,12 +175,12 @@ spec:
 
 
          
-          # Download and extract Go 1.20
-          if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /root ;then
-              echo "Go 1.20 downloaded and extracted successfully."
-              # Set up environment variables
-              export PATH=$PATH:$GOPATH/bin
-            if
+          # # Download and extract Go 1.20
+          # if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /root ;then
+          #     echo "Go 1.20 downloaded and extracted successfully."
+          #     # Set up environment variables
+          #     export PATH=$PATH:$GOPATH/bin
+          #   if
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
              ## Copying desired chaincode to a location relative to $GOPATH/src
@@ -192,7 +192,6 @@ spec:
 
              #chaincode path
              CC_SRC_PATH="$GOPATH/src/github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
-
           fi
 
           #  echo "Installing Chaincode for ${NETWORK_VERSION}"
@@ -222,8 +221,8 @@ spec:
             then
               echo "Error while installing chaincode, exiting.. ${INSTALLED}"
               exit 1
-            fi
           fi
+          
 
           #query installed
           echo "peer query installed"
