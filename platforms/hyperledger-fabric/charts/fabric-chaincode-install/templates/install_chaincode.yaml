@@ -174,7 +174,7 @@ spec:
           fi
 
           #remove go version 1.14
-          if [[ -d "/usr/local/go" && $(go version | grep "1.14") ]]; then
+          if [ -d "/usr/local/go" ]; then
             rm -rf /usr/local/go
 
           fi
