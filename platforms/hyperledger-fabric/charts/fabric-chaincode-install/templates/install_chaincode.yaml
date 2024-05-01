@@ -174,14 +174,21 @@ spec:
           fi
 
           #remove go version 1.14
-          rm -rf /usr/local/go
+          if [[ -d "/usr/local/go" && $(go version | grep "1.14") ]]; then
+            rm -rf /usr/local/go
+
+          fi
          
-          # Download and extract Go 1.20
-          rm -rf /usr/local/go
-          wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local 
+          # Download and extract Go 1.5
+          if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /usr/local ;then
               echo "Go 1.20 downloaded and extracted successfully."
               # Set up environment variables
               export PATH=$PATH:$GOPATH/bin
+          else
+            echo "Failed to download or extract Go 1.15. Exiting..."
+            exit 1
+          fi
+          
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
              ## Copying desired chaincode to a location relative to $GOPATH/src
@@ -198,6 +205,7 @@ spec:
              CC_SRC_PATH="$GOPATH/src/github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
 
           fi
+
            echo "Installing Chaincode for ${NETWORK_VERSION}"
             if [ $PEER_NAME = "peer0" ];then
               ## packaging chaincode
