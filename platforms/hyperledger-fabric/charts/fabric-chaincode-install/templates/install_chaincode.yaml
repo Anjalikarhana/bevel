@@ -147,12 +147,6 @@ spec:
           packages_to_install="curl openssh"
           install_packages "$packages_to_install"
 
-         
-          
-
-          # Create symbolic link for libc.musl-x86_64.so.1
-          mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
-
 
 
           #download fabric
@@ -174,13 +168,6 @@ spec:
           fi
 
 
-         
-          # # Download and extract Go 1.20
-          # if wget -c https://dl.google.com/go/go1.15.10.linux-amd64.tar.gz -O - |  tar -xz -C /root ;then
-          #     echo "Go 1.20 downloaded and extracted successfully."
-          #     # Set up environment variables
-          #     export PATH=$PATH:$GOPATH/bin
-          #   if
 
           if [ "${CC_RUNTIME_LANGUAGE}" = "golang" ]; then
              ## Copying desired chaincode to a location relative to $GOPATH/src
@@ -190,26 +177,30 @@ spec:
              cp -R /tmp/chaincode/{{ $.Values.chaincode.repository.path }}/* $GOPATH/src/github.com/chaincode/
              cd $GOPATH/src/github.com/chaincode/supplychain/cmd
 
+             go mod init github.com/chaincode
+             go mod tidy
+             go mod vendor
+
              #chaincode path
              CC_SRC_PATH="$GOPATH/src/github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
           fi
 
-          #  echo "Installing Chaincode for ${NETWORK_VERSION}"
-          #   if [ $PEER_NAME = "peer0" ];then
-          #     ## packaging chaincode
-          #     echo "Packaging chaincode for the first peer"
-          #     peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CHAINCODE_NAME}_${CHAINCODE_VERSION}
-          #   else
-          #     export CORE_PEER_ADDRESS=${PEER0_ADDRESS}
-          #     echo "Extracting package id"
-          #     peer lifecycle chaincode queryinstalled > log.txt
-          #     PACKAGE_ID=$(cat log.txt | grep "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" | sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}")
-          #     echo "Package Id Extracted ${PACKAGE_ID}"
-          #     peer lifecycle chaincode getinstalledpackage --package-id ${PACKAGE_ID}
-          #     export CORE_PEER_ADDRESS=${PEER_ADDRESS}
-          #     export CHAINCODE_NAME=${PACKAGE_ID}
-          #     echo "installing ${CHAINCODE_NAME} on ${CORE_PEER_ADDRESS}"
-          #   fi
+           echo "Installing Chaincode for ${NETWORK_VERSION}"
+            if [ $PEER_NAME = "peer0" ];then
+              ## packaging chaincode
+              echo "Packaging chaincode for the first peer"
+              peer lifecycle chaincode package ${CHAINCODE_NAME}.tar.gz --path ${CC_SRC_PATH} --lang ${CC_RUNTIME_LANGUAGE} --label ${CHAINCODE_NAME}_${CHAINCODE_VERSION}
+            else
+              export CORE_PEER_ADDRESS=${PEER0_ADDRESS}
+              echo "Extracting package id"
+              peer lifecycle chaincode queryinstalled > log.txt
+              PACKAGE_ID=$(cat log.txt | grep "${CHAINCODE_NAME}_${CHAINCODE_VERSION}" | sed -n "/${CC_NAME}_${CC_VERSION}/{s/^Package ID: //; s/, Label:.*$//; p;}")
+              echo "Package Id Extracted ${PACKAGE_ID}"
+              peer lifecycle chaincode getinstalledpackage --package-id ${PACKAGE_ID}
+              export CORE_PEER_ADDRESS=${PEER_ADDRESS}
+              export CHAINCODE_NAME=${PACKAGE_ID}
+              echo "installing ${CHAINCODE_NAME} on ${CORE_PEER_ADDRESS}"
+            fi
 
           ## Installing Chaincode
           peer lifecycle chaincode install ${CHAINCODE_NAME}.tar.gz
@@ -221,8 +212,8 @@ spec:
             then
               echo "Error while installing chaincode, exiting.. ${INSTALLED}"
               exit 1
-          fi
-          
+            fi
+          fi  
 
           #query installed
           echo "peer query installed"
