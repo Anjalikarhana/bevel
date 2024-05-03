@@ -161,7 +161,7 @@ spec:
           mkdir -p /root/.ssh/     
           ssh-keyscan {{ $.Values.chaincode.repository.hostname }} > /root/.ssh/known_hosts
           git_password=$(cat /opt/gopath/src/github.com/hyperledger/fabric/crypto/user_cred)
-          cd /tmp && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode > git.log 2>&1
+          cd /tmp && git config --global http.postBuffer 157286400 && git clone https://{{ $.Values.chaincode.repository.git_username }}:$git_password@{{ $.Values.chaincode.repository.url }} -b {{ $.Values.chaincode.repository.branch }} chaincode > git.log 2>&1
           ## Check if the repository was cloned correctly
           if [ $? -ne 0 ];
           then
@@ -183,7 +183,7 @@ spec:
               export PATH=$PATH:$GOPATH/bin
               go env -w GO111MODULE=auto
             fi
-            cd $GOPATH/src/github.com/chaincode && dep ensure
+            cd $GOPATH/src/github.com/chaincode && git config --global http.postBuffer 157286400 && dep ensure
 
             #chaincode path
             CC_SRC_PATH="github.com/chaincode/${CHAINCODE_NAME}/${CHAINCODE_MAINDIR}"
