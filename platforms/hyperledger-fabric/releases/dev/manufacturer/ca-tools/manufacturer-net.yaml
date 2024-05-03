@@ -1,0 +1,86 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: manufacturer-net-ca-tools
+  namespace: manufacturer-net
+  annotations:
+    fluxcd.io/automated: "false"
+spec:
+  interval: 1m
+  releaseName: manufacturer-net-ca-tools
+  chart:
+    spec:
+      interval: 1m
+      sourceRef:
+        kind: GitRepository
+        name: flux-local
+        namespace: flux-local
+      chart: platforms/hyperledger-fabric/charts/fabric-catools
+  values:
+    metadata:
+      namespace: manufacturer-net
+      name: ca-tools
+      component_type: peer
+      org_name: manufacturer
+      proxy: none
+    annotations:  
+      service:
+        - example1: example2
+      pvc:
+      deployment:
+    replicaCount: 1
+
+    image:
+      alpineutils: ghcr.io/hyperledger/bevel-alpine:latest
+      catools: ghcr.io/hyperledger/bevel-fabric-ca-tools:1.2.1
+      pullPolicy: IfNotPresent
+    
+    storage:
+      storageclassname: manufacturer-bevel-storageclass
+      storagesize: 512Mi
+    
+    vault:
+      role: vault-role
+      address: http://host.docker.internal:8200
+      authpath: localmanufacturer
+      secretusers: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/users
+      secretorderer: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/orderers
+      secretpeer: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/peers
+      secretpeerorderertls: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/orderer/tls
+      secretcert: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/ca?ca.manufacturer-net-cert.pem
+      secretkey: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/ca?manufacturer-net-CA.key
+      secretcouchdb: secretsv2/data/manufacturer/credentials/manufacturer-net/couchdb/manufacturer
+      secretconfigfile: secretsv2/data/manufacturer/peerOrganizations/manufacturer-net/msp/config
+      serviceaccountname: vault-auth
+      type: hashicorp
+      imagesecretname: ""
+    
+    healthcheck: 
+      retries: 10
+      sleepTimeAfterError: 2
+
+    
+    org_data:
+      external_url_suffix: develop.local.com
+      component_subject: O=Manufacturer,OU=Manufacturer,L=47.38/8.54/Zurich,C=CH
+      cert_subject: O=Manufacturer/OU=Manufacturer/L=47.38,8.54,Zurich/C=CH
+      component_country: CH
+      component_state: Zurich
+      component_location: Zurich
+      ca_url: ca.manufacturer-net:7054
+
+    orderers:
+      name: orderer1-
+    orderers_info:
+      - name: orderer1
+        path: "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNBRENDQWFhZ0F3SUJBZ0lVRWc5UGdXWEhJWENsd2wvcG1meFhNMEZ1QnpRd0NnWUlLb1pJemowRUF3SXcKWGpFTE1Ba0dBMVVFQmhNQ1IwSXhEekFOQmdOVkJBZ01Ca3h2Ym1SdmJqRVBNQTBHQTFVRUJ3d0dURzl1Wkc5dQpNUkF3RGdZRFZRUUtEQWRQY21SbGNtVnlNUnN3R1FZRFZRUUREQkpqWVM1emRYQndiSGxqYUdGcGJpMXVaWFF3CkhoY05NalF3TlRBek1EY3lPREk0V2hjTk1qY3dNakl4TURjeU9ESTRXakJlTVFzd0NRWURWUVFHRXdKSFFqRVAKTUEwR0ExVUVDQXdHVEc5dVpHOXVNUTh3RFFZRFZRUUhEQVpNYjI1a2IyNHhFREFPQmdOVkJBb01CMDl5WkdWeQpaWEl4R3pBWkJnTlZCQU1NRW1OaExuTjFjSEJzZVdOb1lXbHVMVzVsZERCWk1CTUdCeXFHU000OUFnRUdDQ3FHClNNNDlBd0VIQTBJQUJKbHVRMXB0ZzQzQkZWQmFaOHVuQWNxditIblR5eXNNQ1RyTGpMWTVIeUxtdExLNFRLVE4KVWdjbG5UUzYrMjRYSnd2K0JoMHdTZnRHTXEvT3ZvZEZIdFNqUWpCQU1BOEdBMVVkRXdFQi93UUZNQU1CQWY4dwpEZ1lEVlIwUEFRSC9CQVFEQWdHbU1CMEdBMVVkRGdRV0JCUWxGM1JmQldlWWw3SHZCcGJsSWdQalQ4dWczVEFLCkJnZ3Foa2pPUFFRREFnTklBREJGQWlFQXlhVXc0NVZPVk1wQ0g4cHh3cmVhNzVpYkRrVlAwNFl3RU5yaFNNcU4KRWs4Q0lFTWx5YXpCUVpUV05CcWQ5aGNPVktDUFlJT2RreTc0R0xwK3hodzdEWUp6Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0="
+
+    peers:
+      name: peer0,-      
+    peer_count: "1"
+    users: 
+      users_list: "W3sndXNlcic6IE5vbmUsICdpZGVudGl0eSc6ICd1c2VyMScsICdhdHRyaWJ1dGVzJzogW3sna2V5JzogJ2hmLlJldm9rZXInLCAndmFsdWUnOiAndHJ1ZSd9XX1d"
+      users_identities: user1-
+    checks:
+      refresh_cert_value: False
+      add_peer_value: False
